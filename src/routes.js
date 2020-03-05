@@ -4,9 +4,13 @@ import SessionController from './app/controllers/SessionController';
 import ModalityController from './app/controllers/ModalityController';
 import CardController from './app/controllers/CardController';
 
+import authMiddleware from './app/middlewares/auth';
+
 const routes = new Router();
 
 routes.post('/sessions', SessionController.store);
+
+routes.use(authMiddleware);
 
 routes.get('/modalities', ModalityController.index);
 
