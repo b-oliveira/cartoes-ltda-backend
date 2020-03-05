@@ -13,6 +13,14 @@ class Card extends Model {
 
     return this;
   }
+
+  static associate(models) {
+    this.belongsToMany(models.Modality, {
+      through: models.CardModality,
+      foreignKey: 'card_id',
+      as: 'modalities',
+    });
+  }
 }
 
 export default Card;

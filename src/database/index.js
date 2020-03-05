@@ -3,10 +3,11 @@ import Sequelize from 'sequelize';
 import databaseConfig from '../config/database';
 
 import User from '../app/models/User';
-import Modality from '../app/models/Modality';
 import Card from '../app/models/Card';
+import Modality from '../app/models/Modality';
+import CardModality from '../app/models/CardModality';
 
-const models = [User, Modality, Card];
+const models = [User, Card, Modality, CardModality];
 
 class Database {
   constructor() {
