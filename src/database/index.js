@@ -4,8 +4,9 @@ import databaseConfig from '../config/database';
 
 import User from '../app/models/User';
 import Modality from '../app/models/Modality';
+import Card from '../app/models/Card';
 
-const models = [User, Modality];
+const models = [User, Modality, Card];
 
 class Database {
   constructor() {
