@@ -6,6 +6,38 @@ import Card from '../models/Card';
 import CardModality from '../models/CardModality';
 
 class TransactionController {
+  async index(_, res) {
+    const transactions = await Transaction.findAll({
+      attributes: ['sequential', 'value', 'date'],
+      include: [
+        {
+          model: CardModality,
+          as: 'card_modality',
+          attributes: ['card_id', 'modality_id'],
+          include: [
+            {
+              model: Card,
+              as: 'card',
+              attributes: ['id', 'name'],
+            },
+            {
+              model: Modality,
+              as: 'modality',
+              attributes: ['id', 'name', 'rate_percentage', 'days_term'],
+            },
+          ],
+        },
+      ],
+    }).map(transaction => {
+      const { sequential, value, date, card_modality } = transaction;
+      const { card, modality } = card_modality;
+
+      return { sequential, value, date, card, modality };
+    });
+
+    return res.json(transactions);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       card_id: Yup.number().required(),

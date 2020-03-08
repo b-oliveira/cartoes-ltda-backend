@@ -1,9 +1,14 @@
-import { Model } from 'sequelize';
+import Sequelize, { Model } from 'sequelize';
 
 class CardModality extends Model {
   static init(sequelize) {
     super.init(
-      {},
+      {
+        id: {
+          type: Sequelize.INTEGER,
+          primaryKey: true,
+        },
+      },
       {
         sequelize,
         tableName: 'card_modality',

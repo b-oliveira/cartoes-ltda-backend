@@ -17,6 +17,7 @@ routes.get('/modalities', ModalityController.index);
 
 routes.get('/cards', CardController.index);
 
+routes.get('/transactions', TransactionController.index);
 routes.post('/transactions', TransactionController.store);
 
 export default routes;
