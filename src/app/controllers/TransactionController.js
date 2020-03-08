@@ -1,5 +1,7 @@
 import * as Yup from 'yup';
 
+import formatPrice from '../util/format';
+
 import Transaction from '../models/Transaction';
 import Modality from '../models/Modality';
 import Card from '../models/Card';
@@ -33,11 +35,11 @@ class TransactionController {
       const { card, modality } = card_modality;
       const { id, name, rate_percentage } = modality;
 
-      const net_value = value - value * (rate_percentage / 100);
+      const net_value = formatPrice(value - value * (rate_percentage / 100));
 
       return {
         sequential,
-        value,
+        value: formatPrice(value),
         net_value,
         date,
         card,
