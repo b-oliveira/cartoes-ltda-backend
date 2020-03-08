@@ -31,8 +31,21 @@ class TransactionController {
     }).map(transaction => {
       const { sequential, value, date, card_modality } = transaction;
       const { card, modality } = card_modality;
+      const { id, name, rate_percentage } = modality;
 
-      return { sequential, value, date, card, modality };
+      const net_value = value - value * (rate_percentage / 100);
+
+      return {
+        sequential,
+        value,
+        net_value,
+        date,
+        card,
+        modality: {
+          id,
+          name,
+        },
+      };
     });
 
     return res.json(transactions);
@@ -78,7 +91,7 @@ class TransactionController {
         {
           model: Modality,
           as: 'modality',
-          attributes: ['id', 'name', 'rate_percentage', 'days_term'],
+          attributes: ['id', 'name'],
         },
       ],
     });
