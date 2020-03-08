@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { addBusinessDays, format } from 'date-fns';
 
 import formatPrice from '../util/format';
 
@@ -33,15 +34,21 @@ class TransactionController {
     }).map(transaction => {
       const { sequential, value, date, card_modality } = transaction;
       const { card, modality } = card_modality;
-      const { id, name, rate_percentage } = modality;
+      const { id, name, rate_percentage, days_term } = modality;
 
       const net_value = formatPrice(value - value * (rate_percentage / 100));
+
+      const available_date = format(
+        addBusinessDays(date, days_term),
+        'yyyy-MM-dd'
+      );
 
       return {
         sequential,
         value: formatPrice(value),
         net_value,
         date,
+        available_date,
         card,
         modality: {
           id,
