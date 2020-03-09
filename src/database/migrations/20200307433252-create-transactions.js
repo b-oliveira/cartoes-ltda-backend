@@ -23,7 +23,15 @@ module.exports = {
         type: Sequelize.DOUBLE,
         allowNull: false,
       },
+      net_value: {
+        type: Sequelize.DOUBLE,
+        allowNull: false,
+      },
       date: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      available_date: {
         type: Sequelize.DATE,
         allowNull: false,
       },

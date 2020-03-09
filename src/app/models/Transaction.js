@@ -6,7 +6,9 @@ class Transaction extends Model {
       {
         sequential: Sequelize.STRING,
         value: Sequelize.DOUBLE,
+        net_value: Sequelize.DOUBLE,
         date: Sequelize.DATE,
+        available_date: Sequelize.DATE,
       },
       {
         sequelize,

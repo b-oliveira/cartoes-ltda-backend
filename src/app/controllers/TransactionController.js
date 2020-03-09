@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { addBusinessDays, format } from 'date-fns';
+import { addBusinessDays, parseISO, formatISO } from 'date-fns';
 
 import formatPrice from '../util/format';
 
@@ -11,7 +11,13 @@ import CardModality from '../models/CardModality';
 class TransactionController {
   async index(_, res) {
     const transactions = await Transaction.findAll({
-      attributes: ['sequential', 'value', 'date'],
+      attributes: [
+        'sequential',
+        'value',
+        'net_value',
+        'date',
+        'available_date',
+      ],
       include: [
         {
           model: CardModality,
@@ -26,34 +32,30 @@ class TransactionController {
             {
               model: Modality,
               as: 'modality',
-              attributes: ['id', 'name', 'rate_percentage', 'days_term'],
+              attributes: ['id', 'name'],
             },
           ],
         },
       ],
     }).map(transaction => {
-      const { sequential, value, date, card_modality } = transaction;
+      const {
+        sequential,
+        value,
+        net_value,
+        date,
+        available_date,
+        card_modality,
+      } = transaction;
       const { card, modality } = card_modality;
-      const { id, name, rate_percentage, days_term } = modality;
-
-      const net_value = formatPrice(value - value * (rate_percentage / 100));
-
-      const available_date = format(
-        addBusinessDays(date, days_term),
-        'yyyy-MM-dd'
-      );
 
       return {
         sequential,
         value: formatPrice(value),
-        net_value,
-        date,
-        available_date,
+        net_value: formatPrice(net_value),
+        date: formatISO(date),
+        available_date: formatISO(available_date),
         card,
-        modality: {
-          id,
-          name,
-        },
+        modality,
       };
     });
 
@@ -86,7 +88,6 @@ class TransactionController {
       });
 
     const card_modality = await CardModality.findOne({
-      attributes: ['id'],
       where: {
         card_id,
         modality_id,
@@ -100,7 +101,7 @@ class TransactionController {
         {
           model: Modality,
           as: 'modality',
-          attributes: ['id', 'name'],
+          attributes: ['id', 'name', 'rate_percentage', 'days_term'],
         },
       ],
     });
@@ -108,22 +109,33 @@ class TransactionController {
     if (!card_modality)
       return res.status(400).json({ error: 'Cartão não encontrado!' });
 
-    const { id } = await Transaction.create({
+    const { card, modality } = card_modality;
+
+    const { id, name, rate_percentage, days_term } = modality;
+
+    const net_value = value - value * (rate_percentage / 100);
+    const available_date = addBusinessDays(parseISO(date), days_term);
+
+    await Transaction.create({
       card_modality_id: card_modality.id,
       sequential,
       value,
+      net_value,
       date,
+      available_date,
     });
 
-    const { card, modality } = card_modality;
-
     return res.status(200).json({
-      id,
       sequential,
-      value,
-      date,
+      value: formatPrice(value),
+      net_value: formatPrice(net_value),
+      date: formatISO(parseISO(date)),
+      available_date: formatISO(available_date),
       card,
-      modality,
+      modality: {
+        id,
+        name,
+      },
     });
   }
 }
