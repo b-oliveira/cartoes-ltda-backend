@@ -4,6 +4,7 @@ import SessionController from './app/controllers/SessionController';
 import ModalityController from './app/controllers/ModalityController';
 import CardController from './app/controllers/CardController';
 import TransactionController from './app/controllers/TransactionController';
+import BalanceController from './app/controllers/BalanceController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -19,5 +20,7 @@ routes.get('/cards', CardController.index);
 
 routes.get('/transactions', TransactionController.index);
 routes.post('/transactions', TransactionController.store);
+
+routes.get('/balances', BalanceController.index);
 
 export default routes;
