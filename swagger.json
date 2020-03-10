@@ -25,7 +25,6 @@
     "/sessions": {
       "post": {
         "security": [],
-        "summary": "Cria sessão do usuário",
         "parameters": [
           {
             "name": "session",
@@ -66,6 +65,165 @@
                 },
                 "token": {
                   "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "examples": {
+              "application/json": {
+                "error": "Requisição inválida!"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "examples": {
+              "application/json": {
+                "error": "Credenciais inválidas!"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "sequential": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "number"
+                  },
+                  "net_value": {
+                    "type": "number"
+                  },
+                  "date": {
+                    "type": "string"
+                  },
+                  "available_date": {
+                    "type": "string"
+                  },
+                  "card": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "modality": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "examples": {
+              "application/json": {
+                "error": "Credenciais inválidas!"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "parameters": [
+          {
+            "name": "transaction",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "card_id": {
+                  "type": "integer"
+                },
+                "modality_id": {
+                  "type": "integer"
+                },
+                "sequential": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "number"
+                },
+                "date": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "card_id": 1,
+                "modality_id": 1,
+                "sequential": "0000000001",
+                "value": 100,
+                "date": "2020-03-10T05:00:00-03:00"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "sequential": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "number"
+                },
+                "net_value": {
+                  "type": "number"
+                },
+                "date": {
+                  "type": "string"
+                },
+                "available_date": {
+                  "type": "string"
+                },
+                "card": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "modality": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
