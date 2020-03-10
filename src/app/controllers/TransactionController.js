@@ -22,7 +22,7 @@ class TransactionController {
         {
           model: CardModality,
           as: 'card_modality',
-          attributes: ['card_id', 'modality_id'],
+          attributes: ['id'],
           include: [
             {
               model: Card,
@@ -64,10 +64,16 @@ class TransactionController {
 
   async store(req, res) {
     const schema = Yup.object().shape({
-      card_id: Yup.number().required(),
-      modality_id: Yup.number().required(),
+      card_id: Yup.number()
+        .positive()
+        .required(),
+      modality_id: Yup.number()
+        .positive()
+        .required(),
       sequential: Yup.string().required(),
-      value: Yup.number().required(),
+      value: Yup.number()
+        .positive()
+        .required(),
       date: Yup.date().required(),
     });
 
@@ -77,6 +83,7 @@ class TransactionController {
     const { card_id, modality_id, sequential, value, date } = req.body;
 
     const transaction = await Transaction.findOne({
+      attributes: ['id'],
       where: {
         sequential,
       },
@@ -88,6 +95,7 @@ class TransactionController {
       });
 
     const card_modality = await CardModality.findOne({
+      attributes: ['id'],
       where: {
         card_id,
         modality_id,
