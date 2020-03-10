@@ -29,6 +29,9 @@
       "name": "Cards"
     },
     {
+      "name": "Modalities"
+    },
+    {
       "name": "Transactions"
     },
     {
@@ -135,6 +138,45 @@
                         }
                       }
                     }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "examples": {
+              "application/json": {
+                "error": "Credenciais inválidas!"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modalities": {
+      "get": {
+        "tags": [
+          "Modalities"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "rate_percentage": {
+                    "type": "number"
+                  },
+                  "days_term": {
+                    "type": "integer"
                   }
                 }
               }
