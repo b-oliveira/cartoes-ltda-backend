@@ -88,6 +88,49 @@
         }
       }
     },
+    "/cards": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "number"
+                  },
+                  "modalities": {
+                    "type": "array",
+                    "items": {
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "examples": {
+              "application/json": {
+                "error": "Credenciais inválidas!"
+              }
+            }
+          }
+        }
+      }
+    },
     "/transactions": {
       "get": {
         "responses": {
