@@ -21,9 +21,26 @@
       "Bearer": []
     }
   ],
+  "tags": [
+    {
+      "name": "Sessions"
+    },
+    {
+      "name": "Cards"
+    },
+    {
+      "name": "Transactions"
+    },
+    {
+      "name": "Balances"
+    }
+  ],
   "paths": {
     "/sessions": {
       "post": {
+        "tags": [
+          "Sessions"
+        ],
         "security": [],
         "parameters": [
           {
@@ -56,7 +73,7 @@
                   "type": "object",
                   "properties": {
                     "id": {
-                      "type": "number"
+                      "type": "integer"
                     },
                     "username": {
                       "type": "string"
@@ -90,6 +107,9 @@
     },
     "/cards": {
       "get": {
+        "tags": [
+          "Cards"
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -101,7 +121,7 @@
                     "type": "integer"
                   },
                   "name": {
-                    "type": "number"
+                    "type": "string"
                   },
                   "modalities": {
                     "type": "array",
@@ -133,6 +153,9 @@
     },
     "/transactions": {
       "get": {
+        "tags": [
+          "Transactions"
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -192,6 +215,9 @@
         }
       },
       "post": {
+        "tags": [
+          "Transactions"
+        ],
         "parameters": [
           {
             "name": "transaction",
@@ -292,12 +318,15 @@
     },
     "/balances": {
       "get": {
+        "tags": [
+          "Balances"
+        ],
         "parameters": [
           {
             "name": "date",
             "in": "query",
             "required": false,
-            "x-example": "2020-03-08T16:59:00-03:00",
+            "x-example": "2020-03-10T23:59:59-03:00",
             "type": "string"
           }
         ],
