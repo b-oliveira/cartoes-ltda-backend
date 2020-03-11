@@ -9,7 +9,7 @@ import Card from '../models/Card';
 import CardModality from '../models/CardModality';
 
 class TransactionController {
-  async index(_, res) {
+  async index({ res }) {
     const transactions = await Transaction.findAll({
       attributes: [
         'sequential',

@@ -1,7 +1,7 @@
 import Modality from '../models/Modality';
 
 class ModalityController {
-  async index(_, res) {
+  async index({ res }) {
     const modalities = await Modality.findAll({
       attributes: ['id', 'name', 'rate_percentage', 'days_term'],
     });
