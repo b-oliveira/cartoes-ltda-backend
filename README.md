@@ -1,5 +1,7 @@
 <h1 align="center">
   Cartões Ltda Backend
+  <br/>
+  <img src="https://raw.githubusercontent.com/b-oliveira/cartoes-ltda-backend/master/preview.png" />
 </h1>
 
 ## Sobre
@@ -44,6 +46,12 @@ yarn sequelize db:seed:all
 # Execute o servidor
 yarn dev
 ```
+Por fim, acesse http://localhost:3333/api-docs/ (porta 3333 está configurada como padrão) para utilizar o Swagger.
+
+Obs.: Para realizar requisições em rotas protegidas será necessário se autenticar na rota /sessions e, em seguida, pegar o token obtido na resposta e colocar no campo Value, visível ao clicar no botão de Authorize, no seguinte formato:
+
+```Bearer <token>```.
+
 ---
 
 [See my LinkedIn!](https://www.linkedin.com/in/brenner-lo/)
