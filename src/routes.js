@@ -10,6 +10,8 @@ import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
 
+routes.get('/', ({ res }) => res.redirect('/api-docs'));
+
 routes.post('/sessions', SessionController.store);
 
 routes.use(authMiddleware);
